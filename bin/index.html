@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <div id="imagecrop"></div>
+
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.min.js"></script>
+    <script>
+
+        require.config({
+            baseUrl: './src'
+        });
+
+        require(['ImageCrop'], function (ImageCrop) {
+
+            var imageCrop = new ImageCrop({
+                element: $('#imagecrop'),
+                flashUrl: './src/imagecrop.swf',
+                width: 500,
+                height: 500,
+
+                action: 'http://xxx.com',
+                header: {
+                    'xxx': 'yyyy'
+                },
+                accept: 'jpg',
+                minSize: 1024,
+                maxSize: 10240,
+
+                button: {
+                    select: {
+                        x: 95,
+                        y: 125,
+                        width: 100,
+                        height: 50,
+                        text: '选择照片'
+                    }
+                },
+
+                src: {
+                    x: 0,
+                    y: 0,
+                    width: 275,
+                    height: 275
+                },
+
+                dest: [
+                    {
+                        x: 330,
+                        y: 0,
+                        width: 110,
+                        height: 100,
+                        text: '大尺寸头像（自动生成）'
+                    },
+                    {
+                        x: 330,
+                        y: 165,
+                        width: 90,
+                        height: 90,
+                        text: '小尺寸头像（自动生成)'
+                    }
+                ]
+            });
+
+            window.imageCrop = imageCrop;
+        });
+    </script>
+</body>
+</html>
