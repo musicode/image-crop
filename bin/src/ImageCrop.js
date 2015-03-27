@@ -1,6 +1,6 @@
 /**
  * @file 图片裁剪
- * @author zhujialu
+ * @author musicode
  */
 define(function (require) {
 
@@ -10,7 +10,7 @@ define(function (require) {
         return window.ImageCrop;
     }
 
-    var json = require('./json');
+    var json = require('json');
 
     /**
      * 图片裁剪构造函数
@@ -19,7 +19,6 @@ define(function (require) {
      * @param {Object} options
      *
      * @property {jQuery} options.element 生成 flash 的占位符元素
-     * @property {string} options.flashUrl flash 地址
      * @property {number} options.width flash 宽度
      * @property {number} options.height flash 高度
      *
@@ -105,19 +104,19 @@ define(function (require) {
             var me = this;
 
             return [
-                'movieName=', encodeURIComponent(me.movieName),
-                'action=', encodeURIComponent(me.action),
-                'accept=', encodeURIComponent(me.accept),
-                'header=', me.header ? encodeURIComponent(json.stringify(me.header)) : '',
-                'button=', me.button ? encodeURIComponent(json.stringify(me.button)) : '',
-                'minSize=', $.type(me.minSize) === 'number' ? me.minSize : '',
-                'maxSize=', $.type(me.maxSize) === 'number' ? me.maxSize : '',
-                'minWidth=', $.type(me.minWidth) === 'number' ? me.minWidth : '',
-                'maxWidth=', $.type(me.maxWidth) === 'number' ? me.maxWidth : '',
-                'minHeight=', $.type(me.minHeight) === 'number' ? me.minHeight : '',
-                'maxHeight=', $.type(me.maxHeight) === 'number' ? me.maxHeight : '',
-                'src=', encodeURIComponent(json.stringify(me.src)),
-                'dest=', encodeURIComponent(json.stringify(me.dest))
+                'movieName=' + encodeURIComponent(me.movieName),
+                'action=' + encodeURIComponent(me.action),
+                'accept=' + encodeURIComponent(me.accept),
+                'header=' + (me.header ? encodeURIComponent(json.stringify(me.header)) : ''),
+                'button=' + (me.button ? encodeURIComponent(json.stringify(me.button)) : ''),
+                'minSize=' + ($.type(me.minSize) === 'number' ? me.minSize : ''),
+                'maxSize=' + ($.type(me.maxSize) === 'number' ? me.maxSize : ''),
+                'minWidth=' + ($.type(me.minWidth) === 'number' ? me.minWidth : ''),
+                'maxWidth=' + ($.type(me.maxWidth) === 'number' ? me.maxWidth : ''),
+                'minHeight=' + ($.type(me.minHeight) === 'number' ? me.minHeight : ''),
+                'maxHeight=' + ($.type(me.maxHeight) === 'number' ? me.maxHeight : ''),
+                'src=' + encodeURIComponent(json.stringify(me.src)),
+                'dest=' + encodeURIComponent(json.stringify(me.dest))
             ].join('&amp;');
         },
 
@@ -188,16 +187,15 @@ define(function (require) {
      * @type {Object}
      */
     ImageCrop.defaultOptions = {
-
+        flashUrl: require.toUrl('./imageCrop.swf')
     };
-
 
     // 静态成员
     ImageCrop.instances = { };
     ImageCrop.version = '0.0.1';
 
     /**
-     * 计数器，用于生成 IE
+     * 计数器，用于生成 ID
      *
      * @inner
      * @type {number}
