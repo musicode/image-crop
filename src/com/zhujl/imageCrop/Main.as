@@ -133,8 +133,8 @@ package com.zhujl.imageCrop {
         public function initExternal(): void {
 
             // 页面传入的参数
-            //var params: Object = stage.loaderInfo.parameters;
-
+            var params: Object = stage.loaderInfo.parameters;
+/**
             var params = {
                 movieName: 'asdasd',
                 action: 'http://xxx.com',
@@ -179,6 +179,7 @@ package com.zhujl.imageCrop {
                     }
                 ]
             };
+*/
             // 根据参数初始化配置对象
             Config.init(params);
 
@@ -221,7 +222,7 @@ package com.zhujl.imageCrop {
                 uploadButton.addEventListener(MouseEvent.CLICK, onUpload);
             }
 
-            downloadButton = addButton('upload');
+            downloadButton = addButton('download');
             if (downloadButton) {
                 downloadButton.enabled = false;
                 downloadButton.addEventListener(MouseEvent.CLICK, onDownload);
