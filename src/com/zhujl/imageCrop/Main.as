@@ -152,6 +152,13 @@ package com.zhujl.imageCrop {
                         width: 100,
                         height: 50,
                         text: '选择照片'
+                    },
+                    download: {
+                        x: 250,
+                        y: 125,
+                        width: 100,
+                        height: 50,
+                        text: '另存为'
                     }
                 },
 
@@ -416,6 +423,9 @@ package com.zhujl.imageCrop {
 
             if (uploadButton) {
                 uploadButton.enabled = true;
+            }
+            if (downloadButton) {
+                downloadButton.enabled = true;
             }
             if (leftRotateButton) {
                 leftRotateButton.enabled = true;
