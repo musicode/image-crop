@@ -14,6 +14,7 @@ package com.zhujl.imageCrop {
         public static var dest: Array;
 
         public static var accept: Array;
+        public static var adaptive: Boolean;
 
         public static var minSize: Number;
         public static var maxSize: Number;
@@ -29,6 +30,7 @@ package com.zhujl.imageCrop {
          * @param {String} options.action 上传地址
          * @param {?String} options.accept 可接受的图片格式, 以 , 分隔
          * @param {?String} options.header 上传时一起发送的头信息，格式是 json 字符串
+         * @param {?Boolean} options.adaptive 是否自适应为图片允许的最大的尺寸
          * @param {?Number} options.minSize 最小大小，单位是 kb
          * @param {?Number} options.maxSize 最大大小，单位是 kb
          * @param {?Number} options.minWidth 最小宽度，单位是 px
@@ -90,6 +92,12 @@ package com.zhujl.imageCrop {
                 Config.header = typeof options.header === 'string'
                               ? JSON.parse(options.header)
                               : options.header;
+            }
+
+            if (options.adaptive) {
+                Config.adaptive = typeof options.adaptive === 'string'
+                              ? options.adaptive === 'true'
+                              : false;
             }
 
         }

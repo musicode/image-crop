@@ -156,16 +156,10 @@ package com.zhujl.imageCrop {
 
             var scale: Number = 1;
             if (cropWidth > image.width || cropHeight > image.height) {
-                scale = Util.getScale(
-                            {
-                                width: cropWidth,
-                                height: cropHeight
-                            },
-                            {
-                                width: image.width,
-                                height: image.height
-                            }
-                        );
+                scale = getScale();
+            }
+            else if (Config.adaptive) {
+                scale = getScale();
             }
 
             resizeImageMask(
@@ -178,6 +172,19 @@ package com.zhujl.imageCrop {
                 (image.width - imageMask.width) / 2,
                 (image.height - imageMask.height) / 2
             );
+        }
+
+        private function getScale(): Number {
+            return Util.getScale(
+                    {
+                        width: cropWidth,
+                        height: cropHeight
+                    },
+                    {
+                        width: image.width,
+                        height: image.height
+                    }
+                );
         }
 
         /**

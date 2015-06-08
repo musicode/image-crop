@@ -32,7 +32,7 @@ package com.zhujl.imageCrop {
      *     movieName: 'swf 实例 id',
      *     action: '上传地址',
      *     accept: '可接受的图片格式, 以 , 分隔',
-     *
+     *     adaptive: true,  // 是否自适应
      *     header: {
      *         key: 'value'
      *     },
@@ -144,6 +144,7 @@ package com.zhujl.imageCrop {
                 accept: 'png,jpg,jpeg',
                 minSize: 1,
                 maxSize: 1024,
+                //adaptive: 'true',
 
                 button: {
                     select: {
@@ -447,7 +448,11 @@ package com.zhujl.imageCrop {
             }
 
             if (!crop) {
-                crop = new Crop(finalImage.width, finalImage.height);
+
+                var width: uint = finalImage.width;
+                var height: uint = finalImage.height;
+
+                crop = new Crop(width, height);
                 crop.addEventListener(Event.CHANGE, changeCrop);
                 addChild(crop);
             }

@@ -25,6 +25,7 @@ define(function (require) {
      * @property {string} options.action 上传地址
      * @property {Object=} options.header 请求头
      * @property {string} options.accept 图片格式，如'jpg,png,gif'
+     * @property {boolean=} options.adaptive 是否自适应为图片允许的最大的尺寸
      * @property {number=} options.minSize 最小的大小，单位为字节，如 1024
      * @property {number=} options.maxSize 最大的大小，单位为字节，如 10 * 1024
      *
@@ -107,6 +108,7 @@ define(function (require) {
                 'movieName=' + encodeURIComponent(me.movieName),
                 'action=' + encodeURIComponent(me.action),
                 'accept=' + encodeURIComponent(me.accept),
+                'adaptive=' + encodeURIComponent(me.adaptive),
                 'header=' + (me.header ? encodeURIComponent(json.stringify(me.header)) : ''),
                 'button=' + (me.button ? encodeURIComponent(json.stringify(me.button)) : ''),
                 'minSize=' + ($.type(me.minSize) === 'number' ? me.minSize : ''),
