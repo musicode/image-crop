@@ -33,6 +33,7 @@ package com.zhujl.imageCrop {
      *     action: '上传地址',
      *     accept: '可接受的图片格式, 以 , 分隔',
      *     adaptive: true,  // 是否自适应
+     *     original: true,  // 是否上传原图（只是保证裁剪比例）
      *     header: {
      *         key: 'value'
      *     },
@@ -96,7 +97,7 @@ package com.zhujl.imageCrop {
         /**
          * 最终处理的图片
          */
-        private var finalImage: Image;
+        private var maxSizeImage: Image;
 
         /**
          * 裁剪器, 包括遮罩和修剪框
@@ -144,7 +145,8 @@ package com.zhujl.imageCrop {
                 accept: 'png,jpg,jpeg',
                 minSize: 1,
                 maxSize: 1024,
-                //adaptive: 'true',
+                adaptive: 'true',
+                original: 'true',
 
                 button: {
                     select: {
@@ -318,24 +320,46 @@ package com.zhujl.imageCrop {
                     var size: Number = item.width * item.height;
                     if (maxSize === 0 || size > maxSize) {
                         maxSize = size;
-                        finalImage = img;
+                        maxSizeImage = img;
                     }
+
                 }
             );
+
+        }
+
+        private function getOutputImage(): Image {
+            if (Config.original) {
+                trace('original')
+                return new Image(
+                    new Bitmap(
+                        srcImage.pick(
+                            crop.getCropRectangle()
+                        )
+                    )
+                );
+            }
+            else {
+                return maxSizeImage;
+            }
         }
 
         public function upload(): void {
-            finalImage.addEventListener(Event.OPEN, uploadStartHandler);
-            finalImage.addEventListener(ProgressEvent.PROGRESS, uploadingHandler);
-            finalImage.addEventListener(IOErrorEvent.IO_ERROR, uploadErrorHandler);
-            finalImage.addEventListener(HTTPStatusEvent.HTTP_STATUS, uploadStatusHandler);
-            finalImage.addEventListener(ImageEvent.UPLOAD_COMPLETE, uploadCompleteHandler);
 
-            finalImage.upload(Config.action, Config.header);
+            var image: Image = getOutputImage();
+
+            image.addEventListener(Event.OPEN, uploadStartHandler);
+            image.addEventListener(ProgressEvent.PROGRESS, uploadingHandler);
+            image.addEventListener(IOErrorEvent.IO_ERROR, uploadErrorHandler);
+            image.addEventListener(HTTPStatusEvent.HTTP_STATUS, uploadStatusHandler);
+            image.addEventListener(ImageEvent.UPLOAD_COMPLETE, uploadCompleteHandler);
+
+            image.upload(Config.action, Config.header);
+
         }
 
         public function download(): void {
-            finalImage.download();
+            getOutputImage().download();
         }
 
         public function leftRotate(): void {
@@ -449,8 +473,8 @@ package com.zhujl.imageCrop {
 
             if (!crop) {
 
-                var width: uint = finalImage.width;
-                var height: uint = finalImage.height;
+                var width: uint = maxSizeImage.width;
+                var height: uint = maxSizeImage.height;
 
                 crop = new Crop(width, height);
                 crop.addEventListener(Event.CHANGE, changeCrop);
@@ -494,11 +518,11 @@ package com.zhujl.imageCrop {
         }
         private function uploadCompleteHandler(e: ImageEvent): void {
 
-            finalImage.removeEventListener(Event.OPEN, uploadStartHandler);
-            finalImage.removeEventListener(ProgressEvent.PROGRESS, uploadingHandler);
-            finalImage.removeEventListener(IOErrorEvent.IO_ERROR, uploadErrorHandler);
-            finalImage.removeEventListener(HTTPStatusEvent.HTTP_STATUS, uploadStatusHandler);
-            finalImage.removeEventListener(ImageEvent.UPLOAD_COMPLETE, uploadCompleteHandler);
+            maxSizeImage.removeEventListener(Event.OPEN, uploadStartHandler);
+            maxSizeImage.removeEventListener(ProgressEvent.PROGRESS, uploadingHandler);
+            maxSizeImage.removeEventListener(IOErrorEvent.IO_ERROR, uploadErrorHandler);
+            maxSizeImage.removeEventListener(HTTPStatusEvent.HTTP_STATUS, uploadStatusHandler);
+            maxSizeImage.removeEventListener(ImageEvent.UPLOAD_COMPLETE, uploadCompleteHandler);
 
             externalCall.uploadComplte(e.data);
         }

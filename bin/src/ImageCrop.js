@@ -26,6 +26,7 @@ define(function (require) {
      * @property {Object=} options.header 请求头
      * @property {string} options.accept 图片格式，如'jpg,png,gif'
      * @property {boolean=} options.adaptive 是否自适应为图片允许的最大的尺寸
+     * @property {boolean=} options.original 是否上传原图（只是保证裁剪比例）
      * @property {number=} options.minSize 最小的大小，单位为字节，如 1024
      * @property {number=} options.maxSize 最大的大小，单位为字节，如 10 * 1024
      *
@@ -109,6 +110,7 @@ define(function (require) {
                 'action=' + encodeURIComponent(me.action),
                 'accept=' + encodeURIComponent(me.accept),
                 'adaptive=' + encodeURIComponent(me.adaptive),
+                'original=' + encodeURIComponent(me.original),
                 'header=' + (me.header ? encodeURIComponent(json.stringify(me.header)) : ''),
                 'button=' + (me.button ? encodeURIComponent(json.stringify(me.button)) : ''),
                 'minSize=' + ($.type(me.minSize) === 'number' ? me.minSize : ''),
@@ -189,7 +191,7 @@ define(function (require) {
      * @type {Object}
      */
     ImageCrop.defaultOptions = {
-        flashUrl: require.toUrl('./imageCrop.swf')
+        flashUrl: require.toUrl('./imagecrop.swf')
     };
 
     // 静态成员
