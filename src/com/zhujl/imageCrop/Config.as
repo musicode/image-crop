@@ -6,6 +6,7 @@ package com.zhujl.imageCrop {
 
     public class Config {
 
+        public static var encoder: String;
         public static var action: String;
         public static var header: Object;
 
@@ -29,6 +30,7 @@ package com.zhujl.imageCrop {
          *
          * @param {Object} options 外部传入的配置
          * @param {String} options.action 上传地址
+         * @param {String} options.encoder 编码格式 png 或 jpg
          * @param {?String} options.accept 可接受的图片格式, 以 , 分隔
          * @param {?String} options.header 上传时一起发送的头信息，格式是 json 字符串
          * @param {?Boolean} options.adaptive 是否自适应为图片允许的最大的尺寸
@@ -46,6 +48,7 @@ package com.zhujl.imageCrop {
         public static function init(options: Object): void {
 
             Config.action = options.action;
+            Config.encoder = options.encoder === 'png' ? 'png' : 'jpg';
 
             if (options.minSize) {
                 Config.minSize = Number(options.minSize);

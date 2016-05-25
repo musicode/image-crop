@@ -336,7 +336,8 @@ package com.zhujl.imageCrop {
                         srcImage.pick(
                             crop.getCropRectangle()
                         )
-                    )
+                    ),
+                    Config.encoder
                 );
             }
             else {
@@ -444,7 +445,7 @@ package com.zhujl.imageCrop {
         private function imageLoadComplete(e: ImageEvent): void {
 
             var image: Bitmap = e.image;
-            srcImage = new Image(image);
+            srcImage = new Image(image, Config.encoder);
 
             if (uploadButton) {
                 uploadButton.enabled = true;

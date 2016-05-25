@@ -30,6 +30,7 @@ package com.zhujl.imageCrop {
     import flash.events.HTTPStatusEvent;
 
     import com.adobe.images.JPGEncoder;
+    import com.adobe.images.PNGEncoder;
 
     /**
      * [TODO]
@@ -43,9 +44,11 @@ package com.zhujl.imageCrop {
     public class Image extends Sprite {
 
         private var bitmap: Bitmap;
+        private var encoder: String;
 
-        public function Image(bitmap: Bitmap = null) {
+        public function Image(bitmap: Bitmap, encoder: String) {
             this.bitmap = bitmap;
+            this.encoder = encoder;
             this.addChild(bitmap);
         }
 
@@ -62,6 +65,16 @@ package com.zhujl.imageCrop {
             bitmap.height = height;
         }
 
+        public function encode(): ByteArray {
+            if (encoder === 'png') {
+                return PNGEncoder.encode(bitmap.bitmapData);
+            }
+            else {
+                var jpgEncoder: JPGEncoder = new JPGEncoder(100);
+                return jpgEncoder.encode(bitmap.bitmapData);
+            }
+        }
+
         /**
          * 上传图片
          *
@@ -70,11 +83,8 @@ package com.zhujl.imageCrop {
          */
         public function upload(url: String, header: Object = null): void {
 
-            var jpg: JPGEncoder = new JPGEncoder(95);
-            var bytes: ByteArray = jpg.encode(this.bitmap.bitmapData);
-
             var req: URLRequest = new URLRequest(url);
-            req.data = bytes;
+            req.data = encode();
             req.method = URLRequestMethod.POST;
             req.contentType = 'application/octet-stream';
 
@@ -103,11 +113,9 @@ package com.zhujl.imageCrop {
          * 下载图片
          */
         public function download(): void {
-            var jpg: JPGEncoder = new JPGEncoder(100);
-            var bytes: ByteArray = jpg.encode(this.bitmap.bitmapData);
-
             var file:FileReference = new FileReference();
-            file.save(bytes, 'Image[' + getTimestamp() + '].jpg');
+            var extname: String = encoder === 'png' ? 'png' : 'jpg';
+            file.save(encode(), 'Image[' + getTimestamp() + '].' + extname);
         }
 
         /**
@@ -266,7 +274,7 @@ package com.zhujl.imageCrop {
                 new Point(0, 0)
             );
 
-            return new Image(new Bitmap(bitmapData));
+            return new Image(new Bitmap(bitmapData), encoder);
         }
 
         private function getTimestamp(): String {

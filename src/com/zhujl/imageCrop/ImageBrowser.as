@@ -91,11 +91,11 @@ package com.zhujl.imageCrop {
 
             var event: ImageEvent;
 
-            if (!validateSize()) {
-                event = new ImageEvent(ImageEvent.SIZE_ERROR);
-            }
-            else if (!validateAccept()) {
+            if (!validateAccept()) {
                 event = new ImageEvent(ImageEvent.ACCEPT_ERROR);
+            }
+            else if (!validateSize()) {
+                event = new ImageEvent(ImageEvent.SIZE_ERROR);
             }
 
             if (event) {

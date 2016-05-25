@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file 预览图
  * @author zhujl
  */
@@ -67,7 +67,8 @@ package com.zhujl.imageCrop {
                                 true,
                                 0
                             )
-                        )
+                        ),
+                        'jpg'
                     );
 
             image.x = 1;

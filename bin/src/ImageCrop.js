@@ -25,6 +25,7 @@ define(function (require) {
      * @property {string} options.action 上传地址
      * @property {Object=} options.header 请求头
      * @property {string} options.accept 图片格式，如'jpg,png,gif'
+     * @property {string} options.encoder 图片编码器，可选 png 和 jpg
      * @property {boolean=} options.adaptive 是否自适应为图片允许的最大的尺寸
      * @property {boolean=} options.original 是否上传原图（只是保证裁剪比例）
      * @property {number=} options.minSize 最小的大小，单位为字节，如 1024
@@ -191,7 +192,8 @@ define(function (require) {
      * @type {Object}
      */
     ImageCrop.defaultOptions = {
-        flashUrl: require.toUrl('./imagecrop.swf')
+        flashUrl: require.toUrl('./imagecrop.swf'),
+        encoder: 'jpg'
     };
 
     // 静态成员
