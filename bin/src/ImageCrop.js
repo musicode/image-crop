@@ -112,6 +112,7 @@ define(function (require) {
                 'accept=' + encodeURIComponent(me.accept),
                 'adaptive=' + encodeURIComponent(me.adaptive),
                 'original=' + encodeURIComponent(me.original),
+                'encoder=' + encodeURIComponent(me.encoder),
                 'header=' + (me.header ? encodeURIComponent(json.stringify(me.header)) : ''),
                 'button=' + (me.button ? encodeURIComponent(json.stringify(me.button)) : ''),
                 'minSize=' + ($.type(me.minSize) === 'number' ? me.minSize : ''),
