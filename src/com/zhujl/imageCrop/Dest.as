@@ -4,6 +4,7 @@
  */
 package com.zhujl.imageCrop {
 
+    import flash.display.Shape;
     import flash.display.Sprite;
     import flash.display.Bitmap;
     import flash.display.BitmapData;
@@ -19,6 +20,7 @@ package com.zhujl.imageCrop {
          */
         public var image: Image;
 
+        private var destRadius: Number;
         private var destWidth: Number;
         private var destHeight: Number;
         private var destText: String;
@@ -26,13 +28,22 @@ package com.zhujl.imageCrop {
         /**
          * 创建预览图
          */
-        public function Dest(destWidth: Number,
+        public function Dest(destRadius: Number,
+                            destWidth: Number,
                             destHeight: Number,
                             destText: String = '') {
 
-            this.destWidth = destWidth;
-            this.destHeight = destHeight;
+            this.destRadius = destRadius;
             this.destText = destText;
+
+            if (destRadius) {
+                this.destWidth =
+                this.destHeight = destRadius * 2;
+            }
+            else {
+                this.destWidth = destWidth;
+                this.destHeight = destHeight;
+            }
 
             addBackground();
             addImage();
@@ -48,6 +59,7 @@ package com.zhujl.imageCrop {
         public function addBackground(): void {
             this.addChild(
                 Custom.getDestBackground(
+                    destRadius + 1,
                     destWidth + 2,
                     destHeight + 2
                 )
@@ -74,7 +86,16 @@ package com.zhujl.imageCrop {
             image.x = 1;
             image.y = 1;
 
+            if (destRadius) {
+                var mask: Shape = Custom.getCircle(destRadius);
+                mask.x =
+                mask.y = destRadius + 1;
+                this.addChild(mask);
+                image.mask = mask;
+            }
+
             this.addChild(image);
+
         }
 
         /**

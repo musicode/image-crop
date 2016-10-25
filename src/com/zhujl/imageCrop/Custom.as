@@ -4,6 +4,7 @@
  */
 package com.zhujl.imageCrop {
 
+    import flash.display.Shape;
     import flash.display.Sprite;
     import flash.display.Graphics;
 
@@ -124,19 +125,42 @@ package com.zhujl.imageCrop {
             return resizer;
         }
 
-        public static function getDestBackground(width: Number, height: Number): Sprite {
+        public static function getCircle(radius: Number): Shape {
+            var mask: Shape = new Shape();
+            mask.graphics.beginFill(0x000000, 1);
+            mask.graphics.drawCircle(0, 0, radius);
+            mask.graphics.endFill();
+            return mask;
+        }
+
+        public static function getDestBackground(radius: Number, width: Number, height: Number): Sprite {
 
             var bg: Sprite = new Sprite();
 
             var graphics: Graphics = bg.graphics;
 
-            // 画边框
-            graphics.beginFill(0xD8D8D8);
-            graphics.drawRect(0, 0, width, height);
+            var borderColor: uint = 0xD8D8D8;
+            var backgroundColor: uint = 0xF1F1F1;
 
-            // 画填充色
-            graphics.beginFill(0xF1F1F1);
-            graphics.drawRect(1, 1, width - 2, height - 2);
+            if (radius) {
+
+                // 画边框
+                graphics.beginFill(borderColor);
+                graphics.drawCircle(radius, radius, radius);
+
+                // 画填充色
+                graphics.beginFill(backgroundColor);
+                graphics.drawCircle(radius, radius, radius - 1);
+            }
+            else {
+                // 画边框
+                graphics.beginFill(borderColor);
+                graphics.drawRect(0, 0, width, height);
+
+                // 画填充色
+                graphics.beginFill(backgroundColor);
+                graphics.drawRect(1, 1, width - 2, height - 2);
+            }
 
             graphics.endFill();
 

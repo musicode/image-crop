@@ -176,8 +176,7 @@ package com.zhujl.imageCrop {
                     {
                         x: 330,
                         y: 0,
-                        width: 110,
-                        height: 100,
+                        radius: 50,
                         text: '大尺寸头像\n（自动生成）'
                     },
                     {
@@ -309,7 +308,7 @@ package com.zhujl.imageCrop {
             Config.dest.forEach(
                 function (item: Object, index: Number, array: Array) {
 
-                    var dest: Dest = new Dest(item.width, item.height, item.text);
+                    var dest: Dest = new Dest(item.radius, item.width, item.height, item.text);
                     dest.x = item.x;
                     dest.y = item.y;
                     me.addChild(dest);
